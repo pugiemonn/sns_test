@@ -3,24 +3,52 @@ class UsersController Extends AppController {
 
     var $name = 'Users';
     var $scaffold;
+
+  function home ()
+  {
+    $this->checkSession();
+    $this->set('me', $this->User->findById($this->Session->read('my_id')));
+  }
+
+  function login()
+  {
+    $this->set('error', false);
+    if (!empty($this->data))
+    {
+      $someone = $this->User->findByEmail($this->data['User']['email']);
+      if(!empty($someone['User']['pwd']) && $someone['User']['pwd'] == $this->data['User']['pwd'])
+      {
+        $this->Session->write('User', $someone['User']);
+        $this->redirect('/');
+      }
+      else
+      {
+        $this->set('error', true);
+      }
+    }
+  }
+
 /*
-    function index(){
-//        echo Configure::version();
-        $this->set('users', $this->User->find('all'));    
-    }
+  function beforeFilter()
+  {
+    $this->checkSession();
+  }
 
-    function add() { 
-        if(!empty($this->data)) {
-            if($this->User->save($this->data)) {
-                $this->flash("登録が完了しました", "/users");
-//                print_r($this->data);
-            }
-        }
+  function checkSession()
+  {  
+    if (!$this->Session->check('User'))
+    {
+        $this->redirect('/users/login');
+        exit();
     }
-
-    function login() {
-        
-    }
+  }
 */
+
+  function logout()
+  {
+    $this->Session->delete('User');
+    $this->redirect('/');
+  }
+
 }
 ?>
