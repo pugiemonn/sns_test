@@ -1,0 +1,3 @@
+<h1>Default Layout</h1>
+<?php echo $content_for_layout;  ?>
+
