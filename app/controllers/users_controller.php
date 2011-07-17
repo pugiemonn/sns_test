@@ -2,7 +2,8 @@
 class UsersController Extends AppController {
 
     var $name = 'Users';
-
+    var $scaffold;
+/*
     function index(){
 //        echo Configure::version();
         $this->set('users', $this->User->find('all'));    
@@ -20,5 +21,6 @@ class UsersController Extends AppController {
     function login() {
         
     }
+*/
 }
 ?>
