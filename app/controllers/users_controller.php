@@ -10,16 +10,20 @@ class UsersController Extends AppController {
     $this->set('me', $this->User->findById($this->Session->read('my_id')));
   }
 
-  function login()
+ function login()
   {
     $this->set('error', false);
     if (!empty($this->data))
     {
-      $someone = $this->User->findByEmail($this->data['User']['email']);
-      if(!empty($someone['User']['pwd']) && $someone['User']['pwd'] == $this->data['User']['pwd'])
+//      print_r($this->data);
+//      print_r($this->data['User/email']);
+      //$someone = $this->User->findByEmail($this->data['User']['email']);
+      $someone = $this->User->findByEmail($this->data['User/email']);
+      print_r($someone);
+      if(!empty($someone['User']['pwd']) && $someone['User']['pwd'] == $this->data['User/pwd'])
       {
-        $this->Session->write('User', $someone['User']);
-        $this->redirect('/');
+        $this->Session->write('my_id', $someone['User']['id']);
+        $this->redirect('/users/home/');
       }
       else
       {
